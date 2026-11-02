@@ -12,6 +12,7 @@ league_data <- league_data %>%
 
 club_results <- league_data %>% group_by(team) %>%
   summarize(
+    total_npXG = sum(xg_non_penalty),
     avg_npxG = mean(xg_non_penalty),
     avg_npxGOT = mean(xgot_non_penalty),
     total_npxGOT_to_npXG_ratio = sum(xgot_non_penalty) / sum(xg_non_penalty),
