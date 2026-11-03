@@ -1,6 +1,7 @@
 library(dplyr)
 library(tidyr)
 library(ggplot2)
+library(ggrepel)
 
 league_data <- read.csv("data/premier_league_season_2026-2027_stats.csv")
 
@@ -24,13 +25,16 @@ sum(club_results[["total_npxGOT_npXG_diff"]])
 
 write.csv(club_results, "pl_xgot_table.csv")
 ggplot(club_results, aes(x = avg_npxG, y = avg_npxGOT, label=team)) +
+  geom_abline(slope = 1, intercept = 0, linetype = "dashed", colour = "grey60") +
   geom_point() +
-  geom_text(vjust = -0.8) + 
+  geom_text_repel(size = 3, max.overlaps = Inf) +
   expand_limits(x = 0.5, y = 0.5) +
   coord_equal()
 ggplot(club_results, aes(x = avg_npxG, y = total_npxGOT_to_npXG_ratio, label=team)) +
+  geom_hline(yintercept = 1, linetype = "dashed", colour = "grey60") +
   geom_point() +
-  geom_text(vjust = -0.8)
+  geom_text_repel(size = 3, max.overlaps = Inf)
 ggplot(club_results, aes(x = avg_npxG, y = total_npxGOT_npXG_diff, label=team)) +
+  geom_hline(yintercept = 0, linetype = "dashed", colour = "grey60") +
   geom_point() +
-  geom_text(vjust = -0.8)
+  geom_text_repel(size = 3, max.overlaps = Inf)
